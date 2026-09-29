@@ -1,0 +1,338 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="BotMenu.lua"/>
+
+	<!-- The "Bots" submenu of the chat bubble menu (ChatMenu) and one menu per
+	     category. They reuse Blizzard's UIMenuTemplate like EmoteMenu does, so
+	     hover, nesting and the auto-hide timer behave exactly like the stock menus. -->
+	<Frame name="BotMenu" inherits="UIMenuTemplate" hidden="true" parent="ChatMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("ChatMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuCombat" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuFormation" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuLoot" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuProfession" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuQuest" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuGroup" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuNpc" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuRole" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuInventory" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuDeath" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<Frame name="BotMenuInfo" inherits="UIMenuTemplate" hidden="true" parent="BotMenu">
+		<Scripts>
+			<OnLoad>
+				BotMenu_OnLoadMenu("BotMenu");
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+
+	<!-- twow-repo#419: the bot list (all online characters via paced /who). -->
+	<Script file="BotList.lua"/>
+	<Button name="BotListRowTemplate" virtual="true">
+		<Size><AbsDimension x="470" y="16"/></Size>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentName" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size><AbsDimension x="105" y="16"/></Size>
+					<Anchors><Anchor point="LEFT"/></Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size><AbsDimension x="80" y="16"/></Size>
+					<Anchors><Anchor point="LEFT" relativeTo="$parentName" relativePoint="RIGHT"/></Anchors>
+				</FontString>
+				<FontString name="$parentLevel" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size><AbsDimension x="30" y="16"/></Size>
+					<Anchors><Anchor point="LEFT" relativeTo="$parentClass" relativePoint="RIGHT"/></Anchors>
+				</FontString>
+				<FontString name="$parentGuild" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size><AbsDimension x="115" y="16"/></Size>
+					<Anchors><Anchor point="LEFT" relativeTo="$parentLevel" relativePoint="RIGHT"/></Anchors>
+				</FontString>
+				<FontString name="$parentZone" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size><AbsDimension x="140" y="16"/></Size>
+					<Anchors><Anchor point="LEFT" relativeTo="$parentGuild" relativePoint="RIGHT"/></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+		<Scripts>
+			<OnClick>
+				BotList_RowClick();
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Frame name="BotListFrame" parent="UIParent" toplevel="true" movable="true" enableMouse="true" hidden="true" frameStrata="DIALOG">
+		<Size><AbsDimension x="500" y="420"/></Size>
+		<Anchors><Anchor point="CENTER"/></Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets><AbsInset left="11" right="12" top="12" bottom="11"/></BackgroundInsets>
+			<TileSize><AbsValue val="32"/></TileSize>
+			<EdgeSize><AbsValue val="32"/></EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentTitle" inherits="GameFontNormal" text="Bot list (all online)">
+					<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-16"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString name="$parentStatus" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size><AbsDimension x="460" y="14"/></Size>
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-36"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Level from/to:">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-86"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Zone:">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="230" y="-86"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Name">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-110"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Class">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="125" y="-110"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Level">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="205" y="-110"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Guild">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="235" y="-110"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Zone">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="350" y="-110"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentScan" inherits="UIPanelButtonTemplate" text="Scan">
+				<Size><AbsDimension x="90" y="22"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-54"/></Offset></Anchor></Anchors>
+				<Scripts><OnClick>BotList_StartScan();</OnClick></Scripts>
+			</Button>
+			<Button name="$parentCancel" inherits="UIPanelButtonTemplate" text="Cancel">
+				<Size><AbsDimension x="90" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentScan" relativePoint="RIGHT"/></Anchors>
+				<Scripts><OnClick>BotList_CancelScan(nil);</OnClick></Scripts>
+			</Button>
+			<Button name="$parentFaction" inherits="UIPanelButtonTemplate" text="Faction: all">
+				<Size><AbsDimension x="120" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentCancel" relativePoint="RIGHT"><Offset><AbsDimension x="10" y="0"/></Offset></Anchor></Anchors>
+				<Scripts><OnClick>BotList_CycleFaction();</OnClick></Scripts>
+			</Button>
+			<Button name="$parentClass" inherits="UIPanelButtonTemplate" text="Class: all">
+				<Size><AbsDimension x="120" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentFaction" relativePoint="RIGHT"/></Anchors>
+				<Scripts><OnClick>BotList_CycleClass();</OnClick></Scripts>
+			</Button>
+			<EditBox name="$parentMinLevel" inherits="InputBoxTemplate" autoFocus="false" numeric="true" letters="2">
+				<Size><AbsDimension x="30" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="110" y="-82"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnTextChanged>BotList_SetLevel("minLevel", this:GetText());</OnTextChanged>
+					<OnEscapePressed>this:ClearFocus();</OnEscapePressed>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentMaxLevel" inherits="InputBoxTemplate" autoFocus="false" numeric="true" letters="2">
+				<Size><AbsDimension x="30" y="20"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentMinLevel" relativePoint="RIGHT"><Offset><AbsDimension x="10" y="0"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnTextChanged>BotList_SetLevel("maxLevel", this:GetText());</OnTextChanged>
+					<OnEscapePressed>this:ClearFocus();</OnEscapePressed>
+				</Scripts>
+			</EditBox>
+			<EditBox name="$parentZone" inherits="InputBoxTemplate" autoFocus="false" letters="40">
+				<Size><AbsDimension x="200" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="270" y="-82"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnTextChanged>BotList_SetZone(this:GetText());</OnTextChanged>
+					<OnEscapePressed>this:ClearFocus();</OnEscapePressed>
+				</Scripts>
+			</EditBox>
+			<Button name="BotListRow1" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-126"/></Offset></Anchor></Anchors>
+			</Button>
+			<Button name="BotListRow2" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow1" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow3" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow2" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow4" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow3" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow5" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow4" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow6" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow5" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow7" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow6" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow8" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow7" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow9" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow8" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow10" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow9" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow11" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow10" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow12" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow11" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow13" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow12" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow14" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow13" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="BotListRow15" inherits="BotListRowTemplate">
+				<Anchors><Anchor point="TOPLEFT" relativeTo="BotListRow14" relativePoint="BOTTOMLEFT"/></Anchors>
+			</Button>
+			<Button name="$parentInvite" inherits="UIPanelButtonTemplate" text="Invite">
+				<Size><AbsDimension x="110" y="22"/></Size>
+				<Anchors><Anchor point="BOTTOMLEFT"><Offset><AbsDimension x="20" y="16"/></Offset></Anchor></Anchors>
+				<Scripts><OnClick>BotList_Invite(nil);</OnClick></Scripts>
+			</Button>
+			<Button name="$parentRaid" inherits="UIPanelButtonTemplate" text="Convert to raid">
+				<Size><AbsDimension x="140" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentInvite" relativePoint="RIGHT"/></Anchors>
+				<Scripts><OnClick>BotList_ConvertToRaid();</OnClick></Scripts>
+			</Button>
+			<Button name="$parentUp" inherits="UIPanelButtonTemplate" text="^">
+				<Size><AbsDimension x="30" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentRaid" relativePoint="RIGHT"><Offset><AbsDimension x="20" y="0"/></Offset></Anchor></Anchors>
+				<Scripts><OnClick>BotList_Scroll(5);</OnClick></Scripts>
+			</Button>
+			<Button name="$parentDown" inherits="UIPanelButtonTemplate" text="v">
+				<Size><AbsDimension x="30" y="22"/></Size>
+				<Anchors><Anchor point="LEFT" relativeTo="$parentUp" relativePoint="RIGHT"/></Anchors>
+				<Scripts><OnClick>BotList_Scroll(-5);</OnClick></Scripts>
+			</Button>
+			<Button name="$parentClose" inherits="UIPanelButtonTemplate" text="Close">
+				<Size><AbsDimension x="90" y="22"/></Size>
+				<Anchors><Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-20" y="16"/></Offset></Anchor></Anchors>
+				<Scripts><OnClick>BotListFrame:Hide();</OnClick></Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				if ( this.EnableMouseWheel ) then
+					this:EnableMouseWheel(1);
+				end
+				tinsert(UISpecialFrames, "BotListFrame");
+			</OnLoad>
+			<OnDragStart>this:StartMoving();</OnDragStart>
+			<OnDragStop>this:StopMovingOrSizing();</OnDragStop>
+			<OnMouseWheel>BotList_Scroll(arg1);</OnMouseWheel>
+			<OnShow>BotList_Refresh();</OnShow>
+		</Scripts>
+	</Frame>
+
+	<!-- Must stay shown: its OnUpdate paces the /who queries of a scan.
+	     The 1.12 client only sees files that existed when the game started;
+	     after an update that adds BotList.lua, /reload is not enough. Then
+	     this frame hides itself (no OnUpdate error every frame) and says so
+	     once. -->
+	<Frame name="BotListEventFrame">
+		<Scripts>
+			<OnLoad>
+				if ( not BotList_OnUpdate ) then
+					this:Hide();
+					DEFAULT_CHAT_FRAME:AddMessage("|cff66ccffBotMenu:|r bot list not loaded - please close and restart the game (a /reload does not load new addon files).");
+					return;
+				end
+				this:RegisterEvent("WHO_LIST_UPDATE");
+			</OnLoad>
+			<OnEvent>
+				if ( event == "WHO_LIST_UPDATE" ) then
+					BotList_OnWhoUpdate();
+				end
+			</OnEvent>
+			<OnUpdate>
+				BotList_OnUpdate();
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+
+	<!-- Event frame: fills the menus once saved variables are loaded. -->
+	<Frame name="BotMenuEventFrame" hidden="true">
+		<Scripts>
+			<OnLoad>
+				this:RegisterEvent("VARIABLES_LOADED");
+			</OnLoad>
+			<OnEvent>
+				BotMenu_OnEvent();
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>
