@@ -1,0 +1,30 @@
+name: verify
+
+# Every addon folder must match its hash list, and every hash list must cover
+# exactly the files in its folder (nothing added, nothing missing).
+on:
+  push:
+  pull_request:
+
+jobs:
+  hashes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hash lists match the addon folders
+        run: |
+          set -euo pipefail
+          for list in manifests/*.sha256; do
+            addon="$(basename "$list" .sha256)"
+            echo "== $addon"
+            (cd "$addon" && sha256sum -c "../$list")
+            diff <(cut -c67- "$list" | LC_ALL=C sort) \
+                 <(cd "$addon" && find . -type f | sed 's|^\./||' | LC_ALL=C sort)
+          done
+      - name: Layout <Name>/<Name>.toc for 1.12
+        run: |
+          set -euo pipefail
+          for list in manifests/*.sha256; do
+            addon="$(basename "$list" .sha256)"
+            grep -q '^## Interface: 11200' "$addon/$addon.toc"
+          done

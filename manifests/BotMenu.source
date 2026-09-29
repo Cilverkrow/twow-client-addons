@@ -1,0 +1,6 @@
+addon=BotMenu
+version=1.6
+core_repo=Cilverkrow/twow-core
+core_commit=44c2e897a2342f9a3eec9e316e43cf777f9c34ce
+core_path=modules/mod-playerbots/addon/BotMenu-1.12
+tag=BotMenu-v1.6
